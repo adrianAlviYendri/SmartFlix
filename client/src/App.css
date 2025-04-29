@@ -1,0 +1,104 @@
+.container {
+  width: 90%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.img-zoom {
+  transition: transform 0.5s ease;
+}
+
+.img-zoom:hover {
+  transform: scale(1.25);
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: white;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #343a40;
+  padding-top: 60px;
+  color: white;
+}
+
+.table-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 15%;
+  object-fit: cover;
+}
+
+.sidebar a {
+  padding: 10px 15px;
+  display: block;
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  background-color: #495057;
+}
+
+.conten-home-admin {
+  margin-left: 260px;
+}
+
+.conten-edit-cuisine {
+  margin-left: 195px;
+}
+
+.cardDetail {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.centerDetail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imageDetail {
+  width: 400px;
+  height: 400px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  border-radius: 30px;
+}
+
+.hight-image-public {
+  height: 400px;
+  object-fit: cover;
+}
+
+.Google {
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-gradient {
+  background: linear-gradient(45deg, #ff5733, #ffbd33);
+  border: none;
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+.btn-gradient:hover {
+  background: linear-gradient(45deg, #ffbd33, #ff5733);
+  transform: scale(1.05);
+}
