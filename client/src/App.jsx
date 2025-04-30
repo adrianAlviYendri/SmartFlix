@@ -13,6 +13,7 @@ import RecommendationPage from "./movie/pages/RecommendationPage";
 import ProfilePage from "./movie/pages/ProfilePage";
 import Navbar from "./Users/components/navbar";
 import Auth from "./Users/components/Auth";
+import MyCart from "./movie/pages/MyCart";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/home" element={<Auth />}>
             <Route index element={<Home />} />
             <Route path="favorite-list" element={<MyFavoriteList />} />
+            <Route path="my-cart" element={<MyCart />} />
             <Route path="add-favorite/:id" element={<MyFavoriteList />} />
             <Route path="recomendation" element={<RecommendationPage />} />
             <Route path="profile" element={<ProfilePage />} />

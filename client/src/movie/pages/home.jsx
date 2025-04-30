@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { fetchMovies } from "../features/MovieSlice";
 import { addFavorite } from "../features/favoriteSlice";
 import { useNavigate } from "react-router";
+import { createCart } from "../features/MyCartSlice";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -45,16 +46,28 @@ export default function Home() {
               />
               <div className="card-body d-flex flex-column">
                 <h5 className="card-title">{movie.title}</h5>
+                <h6 className="card-title">Price : {movie.price}</h6>
                 <p className="text-muted">
                   Release Date:{" "}
                   {new Date(movie.releaseDate).toISOString().split("T")[0]}
                 </p>
-                <button
-                  className="btn btn-gradient mt-auto"
-                  onClick={() => handleAddFavorite(movie.id)}
-                >
-                  Add Favorite
-                </button>
+                <div className="d-flex gap-4">
+                  <button
+                    className="btn btn-gradient mt-auto w-100"
+                    onClick={() => handleAddFavorite(movie.id)}
+                  >
+                    Add Favorite
+                  </button>
+                  <button
+                    onClick={() => {
+                      dispatch(createCart(movie));
+                      navigate("/home/my-cart");
+                    }}
+                    className="btn btn-success mt-auto w-100"
+                  >
+                    🛒 Add to Cart
+                  </button>
+                </div>
               </div>
             </div>
           </div>
