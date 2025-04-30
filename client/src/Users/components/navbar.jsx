@@ -20,7 +20,7 @@ export default function Navbar() {
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
                 <Link className="nav-link" to="/">
-                  Home
+                  Public
                 </Link>
               </li>
               <li className="nav-item">
