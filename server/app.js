@@ -147,7 +147,23 @@ app.use(authentication);
 
 app.get("/movies", async (req, res, next) => {
   try {
-    let movies = await Movie.findAll();
+    let movies = await Movie.findAll({
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    movies = movies.map((el) => {
+      el = el.toJSON();
+      const random = Math.floor(Math.random() * (60000 - 40000 + 1)) + 40000;
+      el.price = random.toLocaleString("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      });
+
+      return el;
+    });
+
     res.status(200).json(movies);
   } catch (error) {
     console.log("🚀 ~ GET /movies ~ error:", error);
