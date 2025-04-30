@@ -18,7 +18,7 @@ export default function Auth() {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand" to="/home">
             Movie Recommender
           </Link>
           <button
@@ -34,6 +34,14 @@ export default function Auth() {
               <li className="nav-item">
                 <Link to="profile" className="btn btn-outline-secondary mx-2">
                   <b>Profile</b>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to="/home/my-cart"
+                  className="btn btn-outline-warning mx-2"
+                >
+                  🛒 Cart
                 </Link>
               </li>
               <li className="nav-item">
