@@ -35,22 +35,27 @@ export default function MyFavoriteList() {
                   style={styles.image}
                 />
                 <div style={styles.content}>
-                  <h3>{item.Movie.title || "Untitled Movie"}</h3>
-                  <p>{item.Movie.overview || "No description available."}</p>
-                  <p style={styles.releaseDate}>
-                    Release Date:{" "}
-                    {item.Movie.releaseDate
-                      ? new Date(item.Movie.releaseDate)
-                          .toISOString()
-                          .split("T")[0]
-                      : "Unknown"}
-                  </p>
-                  <button
-                    style={styles.deleteButton}
-                    onClick={() => handleDelete(item.MovieId)}
-                  >
-                    Delete
-                  </button>
+                  <div>
+                    <h3>{item.Movie.title || "Untitled Movie"}</h3>
+                    <p>{item.Movie.overview || "No description available."}</p>
+                  </div>
+
+                  <div>
+                    <p style={styles.releaseDate}>
+                      Release Date:{" "}
+                      {item.Movie.releaseDate
+                        ? new Date(item.Movie.releaseDate)
+                            .toISOString()
+                            .split("T")[0]
+                        : "Unknown"}
+                    </p>
+                    <button
+                      style={styles.deleteButton}
+                      onClick={() => handleDelete(item.MovieId)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             ) : null
@@ -100,6 +105,7 @@ const styles = {
     flexDirection: "column",
     flexGrow: 1, // Ini memungkinkan bagian konten berkembang
     padding: "16px",
+    justifyContent: "space-between",
   },
   releaseDate: {
     marginTop: "10px",
