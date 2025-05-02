@@ -34,7 +34,7 @@ export default function FormAddUser() {
       Swal.fire({
         icon: "error",
         title: "Register Failed!",
-        text: "provide valid input",
+        text: error.response.data.message,
       });
     }
   }

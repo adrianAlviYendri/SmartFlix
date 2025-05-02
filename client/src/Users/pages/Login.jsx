@@ -28,7 +28,7 @@ export default function Login() {
       Swal.fire({
         icon: "error",
         title: "Login Failed!",
-        text: "The email or password you entered is incorrect.",
+        text: error.response.data.message,
       });
     }
   };
