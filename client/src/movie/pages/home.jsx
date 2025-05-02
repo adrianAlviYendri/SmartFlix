@@ -2,23 +2,27 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router";
 import { fetchMovies } from "../features/MovieSlice";
-import { addFavorite } from "../features/favoriteSlice";
+import { addFavorite, fetchFavorites } from "../features/favoriteSlice";
 import { useNavigate } from "react-router";
 import { createCart } from "../features/MyCartSlice";
+import { fetchProfile } from "../features/profileSlice";
 
 export default function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { data: movies, loading } = useSelector((state) => state.movies.list);
+  const userId = useSelector((state) => state.profile.data?.id);
 
   useEffect(() => {
     dispatch(fetchMovies());
+    dispatch(fetchProfile());
   }, [dispatch]);
 
   if (loading) return <h2 className="text-center mt-5">Loading...</h2>;
 
   const handleAddFavorite = (movieId) => {
     dispatch(addFavorite(movieId));
+    dispatch(fetchFavorites());
     navigate("favorite-list");
   };
 
@@ -60,7 +64,8 @@ export default function Home() {
                   </button>
                   <button
                     onClick={() => {
-                      dispatch(createCart(movie));
+                      const movieWithUser = { ...movie, userId };
+                      dispatch(createCart(movieWithUser));
                       navigate("/home/my-cart");
                     }}
                     className="btn btn-success mt-auto w-100"

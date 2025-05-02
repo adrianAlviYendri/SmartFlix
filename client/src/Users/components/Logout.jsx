@@ -16,6 +16,7 @@ export default function Logout() {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem("access_token");
+        localStorage.removeItem("userId");
 
         Swal.fire({
           title: "Logged out!",

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { use, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
@@ -20,6 +21,7 @@ export default function Login() {
       });
 
       localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("userId", response.data.id);
       navigate("/home");
     } catch (error) {
       console.log("🚀 ~ handleLogin ~ error:", error);
@@ -59,6 +61,7 @@ export default function Login() {
     if (token) {
       navigate("/home");
     }
+
     signInGoogle();
   }, []);
 

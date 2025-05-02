@@ -11,6 +11,8 @@ const authentication = require("./middleware/authentication");
 const { getMovieRecommendation } = require("./services/gemini");
 const { Op } = require("sequelize");
 const { OAuth2Client } = require("google-auth-library");
+const midtransClient = require("midtrans-client");
+
 const client = new OAuth2Client();
 const cors = require("cors");
 const app = express();
@@ -75,7 +77,11 @@ app.post("/login", async (req, res, next) => {
 
     const access_token = signToken({ id: user.id });
 
-    res.status(200).json({ message: "succes login", access_token });
+    res.status(200).json({
+      message: "succes login",
+      id: user.id,
+      access_token,
+    });
   } catch (error) {
     console.log("🚀 ~ app.get ~ error:", error);
     next(error);
@@ -155,11 +161,8 @@ app.get("/movies", async (req, res, next) => {
 
     movies = movies.map((el) => {
       el = el.toJSON();
-      const random = Math.floor(Math.random() * (60000 - 40000 + 1)) + 40000;
-      el.price = random.toLocaleString("id-ID", {
-        style: "currency",
-        currency: "IDR",
-      });
+
+      el.price = Math.floor(Math.random() * (60000 - 40000 + 1)) + 40000;
 
       return el;
     });
@@ -245,7 +248,7 @@ app.get("/profile", async (req, res, next) => {
     const userId = req.user.id;
 
     const user = await User.findByPk(userId, {
-      attributes: ["username"],
+      attributes: ["username", "id"],
     });
 
     res.status(200).json(user);
@@ -288,6 +291,40 @@ app.post("/recommend", async (req, res, next) => {
     const recommendations = await getMovieRecommendation(preferences);
     res.status(200).json(recommendations);
   } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/payment/midtrans", async (req, res, next) => {
+  try {
+    let snap = new midtransClient.Snap({
+      isProduction: false,
+      serverKey: process.env.SERVER_KEY,
+    });
+
+    let parameter = {
+      transaction_details: {
+        order_id: Math.random().toString(),
+        gross_amount: 10000,
+      },
+      credit_card: {
+        secure: true,
+      },
+      customer_details: {
+        first_name: "budi",
+        last_name: "pratama",
+        email: "budi.pra@example.com",
+        phone: "08111222333",
+      },
+    };
+
+    const transaction = await snap.createTransaction(parameter);
+
+    let transactionToken = transaction.token;
+
+    res.status(200).json({ message: "dfbfvsc", transactionToken });
+  } catch (error) {
+    console.log("🚀 ~ app.get ~ error:", error);
     next(error);
   }
 });

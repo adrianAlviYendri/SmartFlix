@@ -247,6 +247,16 @@ describe("GET /public", () => {
     expect(res.body[0]).toHaveProperty("posterPath", expect.any(String));
     expect(res.body[0]).toHaveProperty("releaseDate", expect.any(String));
   });
+
+  test("berhasil mendapatkan data public dengan query search", async () => {
+    const res = await request(app).get("/public").query({ search: "action" });
+
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    if (res.body.length > 0) {
+      expect(res.body[0]).toHaveProperty("title", expect.any(String));
+    }
+  });
 });
 
 describe("GET /movies", () => {

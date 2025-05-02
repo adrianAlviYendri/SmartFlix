@@ -10,6 +10,7 @@ export const fetchProfile = createAsyncThunk(
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
     });
+
     return response.data;
   }
 );

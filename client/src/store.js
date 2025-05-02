@@ -6,11 +6,10 @@ import recommendationReducer from "./movie/features/recommendationSlice";
 import profileReducer from "./movie/features/profileSlice";
 import cartReducer from "./movie/features/MyCartSlice";
 
-// Ambil data cart dari localStorage
 const cartFromLocalStorage = localStorage.getItem("cartState");
 const initialCartState = cartFromLocalStorage
   ? JSON.parse(cartFromLocalStorage)
-  : { list: [] };
+  : { list: [], selectedItems: [] }; // pastikan selectedItems ada
 
 const store = configureStore({
   reducer: {
@@ -26,10 +25,18 @@ const store = configureStore({
   },
 });
 
-// Simpan ke localStorage setiap kali cart berubah
 store.subscribe(() => {
   const cartState = store.getState().cart;
-  localStorage.setItem("cartState", JSON.stringify(cartState));
+  const userId = localStorage.getItem("userId");
+  if (userId) {
+    localStorage.setItem(
+      "cartState",
+      JSON.stringify({
+        list: cartState.list || [],
+        selectedItems: cartState.selectedItems || [],
+      })
+    );
+  }
 });
 
 export default store;
