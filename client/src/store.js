@@ -9,7 +9,7 @@ import cartReducer from "./movie/features/MyCartSlice";
 const cartFromLocalStorage = localStorage.getItem("cartState");
 const initialCartState = cartFromLocalStorage
   ? JSON.parse(cartFromLocalStorage)
-  : { list: [], selectedItems: [] }; // pastikan selectedItems ada
+  : { list: [], selectedItems: [] };
 
 const store = configureStore({
   reducer: {
