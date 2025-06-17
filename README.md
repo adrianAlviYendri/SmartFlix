@@ -1,63 +1,63 @@
 # SmartFlix
 
-SmartFlix adalah platform rekomendasi film berbasis kecerdasan buatan (AI) yang menyediakan fitur pencarian, rekomendasi, daftar favorit, dan pembayaran film. Project ini terdiri dari dua bagian utama: **Backend (server)** menggunakan Node.js, Express, dan Sequelize, serta **Frontend (client)** menggunakan React dan Redux Toolkit.
+SmartFlix is an AI-powered movie recommendation platform that offers features such as movie search, personalized recommendations, favorites management, and movie payments. The project consists of two main parts: a **Backend (server)** built with Node.js, Express, and Sequelize, and a **Frontend (client)** built with React and Redux Toolkit.
 
 ---
 
-## Fitur Utama
+## Main Features
 
 ### Backend (Server)
 
-- **Autentikasi & Otorisasi**: Register, login (email/password & Google OAuth), JWT-based authentication.
-- **Manajemen Film**: Mendapatkan daftar film publik dan privat, pencarian film, serta menambah film ke favorit.
-- **Favorit**: Menambah, melihat, dan menghapus film favorit pengguna.
-- **Profil Pengguna**: Melihat dan mengubah username.
-- **Rekomendasi AI**: Mendapatkan rekomendasi film berbasis preferensi menggunakan Google Gemini AI.
-- **Pembayaran**: Integrasi pembayaran dengan Midtrans (fitur checkout keranjang).
-- **Error Handling**: Middleware penanganan error yang konsisten.
-- **Testing**: Unit dan integration test menggunakan Jest & Supertest.
+- **Authentication & Authorization**: Register, login (email/password & Google OAuth), JWT-based authentication.
+- **Movie Management**: Retrieve public and private movie lists, search movies, and add movies to favorites.
+- **Favorites**: Add, view, and remove user favorite movies.
+- **User Profile**: View and update username.
+- **AI Recommendations**: Get movie recommendations based on user preferences using Google Gemini AI.
+- **Payment Integration**: Checkout and payment via Midtrans.
+- **Error Handling**: Consistent error handling middleware.
+- **Testing**: Unit and integration tests using Jest & Supertest.
 
 ### Frontend (Client)
 
-- **Autentikasi**: Register, login, Google Sign-In.
-- **Daftar Film Publik**: Melihat dan mencari film tanpa login.
-- **Dashboard Pengguna**: Setelah login, pengguna dapat melihat film, menambah ke favorit, mengelola profil, dan melakukan pembayaran.
-- **Rekomendasi AI**: Form input preferensi untuk mendapatkan rekomendasi film dari AI.
-- **Keranjang (Cart)**: Menambah film ke keranjang, memilih film untuk checkout, dan melakukan pembayaran via Midtrans.
-- **UI Modern**: Menggunakan Bootstrap, SweetAlert2, dan desain responsif.
+- **Authentication**: Register, login, Google Sign-In.
+- **Public Movie List**: View and search movies without logging in.
+- **User Dashboard**: After login, users can view movies, add to favorites, manage profile, and make payments.
+- **AI Recommendations**: Input preferences to get AI-powered movie recommendations.
+- **Cart**: Add movies to cart, select for checkout, and pay via Midtrans.
+- **Modern UI**: Built with Bootstrap, SweetAlert2, and responsive design.
 
 ---
 
-## Struktur Project
+## Project Structure
 
 ```
 SmartFlix/
 │
-├── client/         # Frontend React (Vite)
+├── client/         # React Frontend (Vite)
 │   ├── src/
-│   │   ├── movie/  # Fitur film, favorit, rekomendasi, cart, dsb.
-│   │   └── Users/  # Fitur autentikasi & profil
+│   │   ├── movie/  # Movie, favorites, recommendation, cart features, etc.
+│   │   └── Users/  # Authentication & profile features
 │   ├── public/
 │   └── ...
 │
-├── server/         # Backend Express
-│   ├── models/     # Model Sequelize (User, Movie, Favorite)
-│   ├── migrations/ # Migrasi database
-│   ├── seeders/    # Seeder data awal
-│   ├── helpers/    # Helper (bcrypt, jwt)
+├── server/         # Express Backend
+│   ├── models/     # Sequelize models (User, Movie, Favorite)
+│   ├── migrations/ # Database migrations
+│   ├── seeders/    # Initial data seeders
+│   ├── helpers/    # Helpers (bcrypt, jwt)
 │   ├── middleware/ # Middleware (auth, error handler)
-│   ├── services/   # Integrasi AI (Gemini)
-│   ├── __test__/   # Unit & integration test
+│   ├── services/   # AI integration (Gemini)
+│   ├── __test__/   # Unit & integration tests
 │   └── ...
 │
-└── README.md       # Dokumentasi utama
+└── README.md       # Main documentation
 ```
 
 ---
 
-## Cara Menjalankan Project
+## Getting Started
 
-### 1. Clone Repository
+### 1. Clone the Repository
 
 ```sh
 git clone https://github.com/username/SmartFlix.git
@@ -69,7 +69,7 @@ cd SmartFlix
 ```sh
 cd server
 cp .env.example .env
-# Isi variabel pada .env sesuai kebutuhan (TMDB_API_KEY, JWT_SECRET, dsb)
+# Fill in the variables in .env (TMDB_API_KEY, JWT_SECRET, etc.)
 npm install
 npx sequelize-cli db:create
 npx sequelize-cli db:migrate
@@ -77,29 +77,29 @@ npx sequelize-cli db:seed:all
 npm start
 ```
 
-Server berjalan di `http://localhost:3000`
+Server runs at `http://localhost:3000`
 
 ### 3. Setup Frontend (Client)
 
 ```sh
 cd client
 cp .env.example .env
-# Isi VITE_GOOGLE_CLIENT_ID sesuai kredensial Google OAuth Anda
+# Fill in VITE_GOOGLE_CLIENT_ID with your Google OAuth credentials
 npm install
 npm run dev
 ```
 
-Frontend berjalan di `http://localhost:5173`
+Frontend runs at `http://localhost:5173`
 
 ---
 
-## Dokumentasi API
+## API Documentation
 
-Dokumentasi lengkap endpoint backend tersedia di [server/readme.md](server/readme.md).
+Full backend API documentation is available at [server/readme.md](server/readme.md).
 
 ---
 
-## Teknologi yang Digunakan
+## Technologies Used
 
 - **Backend**: Node.js, Express, Sequelize, PostgreSQL, JWT, Google OAuth, Midtrans, Google Gemini AI
 - **Frontend**: React, Redux Toolkit, Bootstrap, SweetAlert2, Vite
@@ -107,4 +107,4 @@ Dokumentasi lengkap endpoint backend tersedia di [server/readme.md](server/readm
 
 ---
 
-> SmartFlix - Platform Rekomendasi Film AI untuk pengalaman menonton yang lebih cerdas dan personal.
+> SmartFlix - AI Movie Recommendation Platform for a smarter and more personal movie
