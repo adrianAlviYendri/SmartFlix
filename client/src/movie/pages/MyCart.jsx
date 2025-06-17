@@ -8,13 +8,18 @@ import {
   selectCheckoutTotal,
 } from "../features/MyCartSlice";
 import { useEffect } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function MyCart() {
   const userId = Number(localStorage.getItem("userId"));
+
   const dispatch = useDispatch();
 
   const myCart = useSelector((state) =>
-    state.cart.list.filter((item) => item.userId === userId)
+    state.cart.list.filter((item) => {
+      return item.userId === userId;
+    })
   );
 
   const selectedItems = useSelector((state) =>
@@ -38,34 +43,65 @@ export default function MyCart() {
 
   useEffect(() => {
     console.log("🚀 ~ MyCart ~ totalCheckout:", totalCheckout);
-    console.log("🚀 ~ MyCart ~ myCart:", myCart);
   }, [myCart]);
 
   function handlerMidtrans() {
-    try {
-      window.snap.pay("", {
-        onSuccess: function (result) {
-          /* You may add your own implementation here */
+    const total = totalCheckout;
+    const user = JSON.parse(localStorage.getItem("profile")); // atau ambil dari redux
 
-          console.log(result);
-        },
-        onPending: function (result) {
-          /* You may add your own implementation here */
-
-          console.log(result);
-        },
-        onError: function (result) {
-          /* You may add your own implementation here */
-
-          console.log(result);
-        },
-        onClose: function () {
-          /* You may add your own implementation here */
-        },
+    axios
+      .post(
+        "http://localhost:3000/payment/midtrans",
+        { total, user },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        window.snap.pay(res.data.transactionToken, {
+          onSuccess: function (result) {
+            Swal.fire({
+              icon: "success",
+              title: "Pembayaran berhasil!",
+              text: "Transaksi kamu sukses.",
+            });
+            console.log(result);
+          },
+          onPending: function (result) {
+            Swal.fire({
+              icon: "info",
+              title: "Menunggu pembayaran...",
+              text: "Transaksi kamu sedang diproses.",
+            });
+            console.log(result);
+          },
+          onError: function (result) {
+            Swal.fire({
+              icon: "error",
+              title: "Pembayaran gagal!",
+              text: "Terjadi kesalahan saat pembayaran.",
+            });
+            console.log(result);
+          },
+          onClose: function () {
+            Swal.fire({
+              icon: "warning",
+              title: "Popup ditutup",
+              text: "Kamu menutup popup tanpa menyelesaikan pembayaran.",
+            });
+          },
+        });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal memulai pembayaran",
+          text: "Terjadi kesalahan.",
+        });
+        console.log(err);
       });
-    } catch (error) {
-      console.log("🚀 ~ handlerMidtrans ~ error:", error);
-    }
   }
 
   return (

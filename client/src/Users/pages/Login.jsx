@@ -39,7 +39,9 @@ export default function Login() {
       const res = await axios.post("http://localhost:3000/google-login", {
         googleToken: response.credential,
       });
+
       localStorage.setItem("access_token", res.data.access_token);
+      localStorage.setItem("userId", res.data.id);
       navigate("/home");
     } catch (error) {
       console.log("🚀 ~ handleCredentialResponse ~ error:", error);

@@ -123,7 +123,7 @@ app.post("/google-login", async (req, res, next) => {
 
     res
       .status(created ? 201 : 200)
-      .json({ message: "succes login with google", access_token });
+      .json({ message: "succes login with google", id: user.id, access_token });
   } catch (error) {
     console.log("🚀 ~ app.post ~ error:", error);
     next(error);
@@ -295,8 +295,9 @@ app.post("/recommend", async (req, res, next) => {
   }
 });
 
-app.get("/payment/midtrans", async (req, res, next) => {
+app.post("/payment/midtrans", async (req, res, next) => {
   try {
+    const { total, user } = req.body;
     let snap = new midtransClient.Snap({
       isProduction: false,
       serverKey: process.env.SERVER_KEY,
@@ -304,27 +305,22 @@ app.get("/payment/midtrans", async (req, res, next) => {
 
     let parameter = {
       transaction_details: {
-        order_id: Math.random().toString(),
-        gross_amount: 10000,
+        order_id: "ORDER-" + Date.now(),
+        gross_amount: total,
       },
       credit_card: {
         secure: true,
       },
       customer_details: {
-        first_name: "budi",
-        last_name: "pratama",
-        email: "budi.pra@example.com",
-        phone: "08111222333",
+        first_name: user?.username || "User",
+        email: user?.email || "user@example.com",
       },
     };
 
     const transaction = await snap.createTransaction(parameter);
 
-    let transactionToken = transaction.token;
-
-    res.status(200).json({ message: "dfbfvsc", transactionToken });
+    res.status(200).json({ transactionToken: transaction.token });
   } catch (error) {
-    console.log("🚀 ~ app.get ~ error:", error);
     next(error);
   }
 });
